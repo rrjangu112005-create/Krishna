@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कृष्ण कोचिंग सेंटर - Admin Panel</title>
+</head>
+
+<body>
+
+    <h1>कृष्ण कोचिंग सेंटर</h1>
+    <h2>Admin Panel</h2>
+
+    <p>यहाँ से ऐप का content manage किया जाएगा।</p>
+
+    <button>Exams</button>
+    <button>Subjects</button>
+    <button>PDF / Notes</button>
+    <button>Videos</button>
+    <button>Previous Papers</button>
+    <button>Mock Tests</button>
+    <button>Current Affairs</button>
+    <button>Students</button>
+
+</body>
+</html>
