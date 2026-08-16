@@ -1,24 +1,25 @@
 plugins {
-    id "com.android.application"
-    id "org.jetbrains.kotlin.android"
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace "com.krishnacoachingcenter.app"
-
+    namespace 'com.krishnacoachingcenter.app'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.krishnacoachingcenter.app"
-
+        applicationId 'com.krishnacoachingcenter.app'
         minSdk 23
         targetSdk 35
-
         versionCode 2
-        versionName "2.0"
+        versionName '2.0'
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
         release {
             minifyEnabled false
         }
@@ -30,15 +31,12 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = '17'
     }
 }
 
 dependencies {
-
-    implementation "androidx.core:core-ktx:1.15.0"
-
-    implementation "androidx.activity:activity-ktx:1.10.1"
-
-    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.activity:activity-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 }
