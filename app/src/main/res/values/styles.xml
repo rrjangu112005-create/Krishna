@@ -3,11 +3,9 @@
 <resources>
 
     <style name="Theme.Krishna"
-        parent="android:style/Theme.Material.Light.NoActionBar">
+        parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="android:fontFamily">sans</item>
-
-        <item name="android:windowActionModeOverlay">true</item>
 
         <item name="android:colorAccent">#1D4ED8</item>
 
