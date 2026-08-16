@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "309836277967",
+    "project_id": "krishna-coaching-center-eea77",
+    "storage_bucket": "krishna-coaching-center-eea77.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309836277967:android:d3d653857b90f6704b6fba",
+        "android_client_info": {
+          "package_name": "com.krishnacoachingcenter.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfMi98bH2F0uxcLQcjrNnMO3e3j9Cy8jM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
