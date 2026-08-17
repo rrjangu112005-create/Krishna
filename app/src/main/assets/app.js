@@ -1,141 +1,71 @@
-const exams = [
-    {
-        name: "राजस्थान CET",
-        description: "CET की तैयारी, विषयवार सामग्री और Mock Test"
-    },
-    {
-        name: "राजस्थान पुलिस",
-        description: "Police भर्ती की तैयारी और अभ्यास"
-    },
-    {
-        name: "पटवारी",
-        description: "Patwari परीक्षा की संपूर्ण तैयारी"
-    },
-    {
-        name: "VDO / BDO",
-        description: "ग्राम विकास अधिकारी और BDO की तैयारी"
-    },
-    {
-        name: "अन्य राजस्थान भर्ती",
-        description: "अन्य प्रतियोगी परीक्षाओं की तैयारी"
-    }
-];
+const APP_NAME = "कृष्ण कोचिंग सेंटर";
+const CENTER_PHONE = "6375630291";
 
-const questions = [
+let currentUser = null;
+let currentUserProfile = null;
+let selectedExam = "";
+
+const EXAMS = [
     {
-        question: "राजस्थान की राजधानी क्या है?",
-        options: [
-            "जयपुर",
-            "जोधपुर",
-            "उदयपुर",
-            "कोटा"
-        ],
-        answer: 0
+        id: "cet",
+        name: "राजस्थान CET"
     },
     {
-        question: "राजस्थान दिवस कब मनाया जाता है?",
-        options: [
-            "30 मार्च",
-            "15 अगस्त",
-            "26 जनवरी",
-            "1 नवंबर"
-        ],
-        answer: 0
+        id: "police",
+        name: "राजस्थान पुलिस"
     },
     {
-        question: "CET का पूरा नाम क्या है?",
-        options: [
-            "Common Eligibility Test",
-            "Central Education Test",
-            "Career Eligibility Test",
-            "Common Exam Training"
-        ],
-        answer: 0
+        id: "patwari",
+        name: "पटवारी"
     },
     {
-        question: "राजस्थान का राज्य वृक्ष कौन सा है?",
-        options: [
-            "खेजड़ी",
-            "नीम",
-            "पीपल",
-            "बरगद"
-        ],
-        answer: 0
+        id: "vdo",
+        name: "VDO / BDO"
     },
     {
-        question: "राजस्थान का राज्य पक्षी कौन सा है?",
-        options: [
-            "गोडावण",
-            "मोर",
-            "तोता",
-            "कबूतर"
-        ],
-        answer: 0
-    },
-    {
-        question: "राजस्थान की सबसे बड़ी खारे पानी की झील कौन सी है?",
-        options: [
-            "सांभर झील",
-            "पुष्कर झील",
-            "जयसमंद झील",
-            "आना सागर"
-        ],
-        answer: 0
-    },
-    {
-        question: "भारत का संविधान कब लागू हुआ?",
-        options: [
-            "26 जनवरी 1950",
-            "15 अगस्त 1947",
-            "26 नवंबर 1949",
-            "2 अक्टूबर 1950"
-        ],
-        answer: 0
-    },
-    {
-        question: "भारत की राजधानी क्या है?",
-        options: [
-            "नई दिल्ली",
-            "मुंबई",
-            "जयपुर",
-            "लखनऊ"
-        ],
-        answer: 0
+        id: "other",
+        name: "अन्य राजस्थान भर्ती"
     }
 ];
 
 
-function showPage(pageId) {
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(function(page) {
-        page.classList.remove("active");
-    });
-
-    const selectedPage =
-        document.getElementById(pageId);
-
-    if (selectedPage) {
-        selectedPage.classList.add("active");
-    }
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    if (pageId === "exams") {
-        loadExams();
-    }
+function byId(id) {
+    return document.getElementById(id);
 }
 
 
-function loadExams() {
+function showPage(id) {
+
+    document.querySelectorAll(".page")
+        .forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+    const page = byId(id);
+
+    if (page) {
+        page.classList.add("active");
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+function openHome() {
+    showPage("home");
+}
+
+
+function openExams() {
+
+    showPage("exams");
+
+    renderExams();
+}
+function renderExams() {
 
     const container =
-        document.getElementById("examList");
+        byId("examList");
 
     if (!container) {
         return;
@@ -143,7 +73,7 @@ function loadExams() {
 
     container.innerHTML = "";
 
-    exams.forEach(function(exam) {
+    EXAMS.forEach(function(exam) {
 
         const card =
             document.createElement("div");
@@ -151,61 +81,1205 @@ function loadExams() {
         card.className = "card";
 
         card.innerHTML = `
-            <h3>🎯 ${exam.name}</h3>
+            <h3>🎯 ${escapeHtml(exam.name)}</h3>
+
+            <button
+                class="primary"
+                onclick="selectExam('${exam.id}')">
+                इस परीक्षा की सामग्री देखें
+            </button>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+function selectExam(examId) {
+
+    selectedExam = examId;
+
+    showPage("videos");
+
+    loadVideos();
+}
+
+
+function openVideos() {
+
+    showPage("videos");
+
+    loadVideos();
+}
+
+
+function openClasses() {
+
+    showPage("classes");
+
+    loadVideos();
+}
+
+
+function openNotes() {
+
+    showPage("pdfs");
+
+    loadNotes();
+}
+
+
+function openPapers() {
+
+    showPage("papers");
+
+    loadPapers();
+}
+
+
+function openQuestionBank() {
+
+    showPage("questionbank");
+
+    loadQuestionBank();
+}
+
+
+function openCurrentAffairs() {
+
+    showPage("current");
+
+    loadCurrentAffairs();
+        }
+async function loadVideos() {
+
+    const container =
+        byId("videoList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>वीडियो लोड हो रहे हैं...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "वीडियो सेवा अभी Firebase से connect नहीं हुई है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const videos =
+            await window.FirebaseApp.getVideos(
+                selectedExam
+            );
+
+        renderVideos(videos);
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "वीडियो लोड नहीं हो सके।"
+        );
+    }
+}
+
+
+function renderVideos(videos) {
+
+    const container =
+        byId("videoList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!videos || videos.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>🎥 वीडियो उपलब्ध नहीं हैं</h3>
+                <p>
+                    इस परीक्षा के लिए अभी कोई वीडियो upload नहीं किया गया है।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    videos.forEach(function(video) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        const videoUrl =
+            escapeAttribute(video.url || "");
+
+        card.innerHTML = `
+            <h3>
+                ▶️ ${escapeHtml(video.title || "वीडियो")}
+            </h3>
 
             <p>
-                ${exam.description}
+                ${escapeHtml(video.description || "")}
+            </p>
+
+            <video
+                controls
+                playsinline
+                preload="metadata"
+                style="width:100%;border-radius:12px;"
+                src="${videoUrl}">
+            </video>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+function filterVideos(examId) {
+
+    selectedExam = examId;
+
+    loadVideos();
+}
+async function loadNotes() {
+
+    const container =
+        byId("notesList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>Notes लोड हो रहे हैं...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "Notes service अभी Firebase से connect नहीं हुई है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const files =
+            await window.FirebaseApp.getFiles(
+                "notes"
+            );
+
+        renderFiles(
+            container,
+            files,
+            "📚 PDF / Notes"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "Notes लोड नहीं हो सके।"
+        );
+    }
+}
+
+
+async function loadPapers() {
+
+    const container =
+        byId("papersList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>Previous Papers लोड हो रहे हैं...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "Previous Papers service अभी Firebase से connect नहीं हुई है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const files =
+            await window.FirebaseApp.getFiles(
+                "papers"
+            );
+
+        renderFiles(
+            container,
+            files,
+            "📄 Previous Papers"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "Previous Papers लोड नहीं हो सके।"
+        );
+    }
+}
+
+
+function renderFiles(
+    container,
+    files,
+    heading
+) {
+
+    container.innerHTML = "";
+
+    if (!files || files.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>${heading}</h3>
+                <p>
+                    अभी कोई सामग्री upload नहीं की गई है।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    files.forEach(function(file) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>
+                ${escapeHtml(file.title || "File")}
+            </h3>
+
+            <p>
+                ${escapeHtml(file.description || "")}
             </p>
 
             <button
                 class="primary"
-                onclick="openExam('${exam.name}')">
+                onclick="openRemoteFile('${escapeAttribute(file.url)}')">
+                📖 खोलें
+            </button>
+        `;
 
-                परीक्षा खोलें
+        container.appendChild(card);
+    });
+}
+
+
+function openRemoteFile(url) {
+
+    if (!url) {
+
+        showMessage(
+            "File",
+            "File उपलब्ध नहीं है।"
+        );
+
+        return;
+    }
+
+    window.open(url, "_blank");
+    }
+    async function loadQuestionBank() {
+
+    const container =
+        byId("questionBankList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>Question Bank लोड हो रहा है...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "Question Bank अभी Firebase से connect नहीं हुआ है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const questions =
+            await window.FirebaseApp.getQuestions(
+                selectedExam
+            );
+
+        renderQuestionBank(questions);
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "Question Bank लोड नहीं हो सका।"
+        );
+    }
+}
+
+
+function renderQuestionBank(questions) {
+
+    const container =
+        byId("questionBankList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!questions || questions.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>❓ Question Bank</h3>
+                <p>
+                    इस परीक्षा के लिए questions उपलब्ध नहीं हैं।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    questions.forEach(function(question, index) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        const options =
+            Array.isArray(question.options)
+                ? question.options
+                : [];
+
+        card.innerHTML = `
+            <h3>
+                ${index + 1}.
+                ${escapeHtml(question.question)}
+            </h3>
+
+            ${options.map(function(option) {
+
+                return `
+                    <p>
+                        ○ ${escapeHtml(option)}
+                    </p>
+                `;
+
+            }).join("")}
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+async function openMockTest() {
+
+    showPage("tests");
+
+    await startMockTest();
+}
+let testQuestions = [];
+let testAnswers = {};
+
+
+async function startMockTest() {
+
+    const container =
+        byId("quiz");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>Mock Test तैयार हो रहा है...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "Mock Test अभी Firebase से connect नहीं हुआ है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        testQuestions =
+            await window.FirebaseApp.getQuestions(
+                selectedExam
+            );
+
+        testAnswers = {};
+
+        renderMockTest();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "Mock Test तैयार नहीं हो सका।"
+        );
+    }
+}
+
+
+function renderMockTest() {
+
+    const container =
+        byId("quiz");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!testQuestions.length) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>📝 Mock Test</h3>
+                <p>
+                    इस परीक्षा के लिए questions उपलब्ध नहीं हैं।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    testQuestions.forEach(
+        function(question, index) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "card";
+
+            let optionsHtml = "";
+
+            question.options.forEach(
+                function(option, optionIndex) {
+
+                    optionsHtml += `
+                        <label
+                            style="display:block;margin:12px 0;">
+
+                            <input
+                                type="radio"
+                                name="test_${index}"
+                                value="${optionIndex}"
+                                onchange="setTestAnswer(${index},${optionIndex})">
+
+                            ${escapeHtml(option)}
+
+                        </label>
+                    `;
+                }
+            );
+
+            card.innerHTML = `
+                <h3>
+                    ${index + 1}.
+                    ${escapeHtml(question.question)}
+                </h3>
+
+                ${optionsHtml}
+            `;
+
+            container.appendChild(card);
+        }
+    );
+
+
+    const submit =
+        document.createElement("button");
+
+    submit.className = "primary";
+
+    submit.textContent =
+        "✅ Test Submit करें";
+
+    submit.onclick =
+        submitMockTest;
+
+    container.appendChild(submit);
+}
+
+
+function setTestAnswer(
+    questionIndex,
+    answerIndex
+) {
+
+    testAnswers[questionIndex] =
+        answerIndex;
+}
+
+
+async function submitMockTest() {
+
+    let score = 0;
+    let attempted = 0;
+
+    testQuestions.forEach(
+        function(question, index) {
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    testAnswers,
+                    index
+                )
+            ) {
+
+                attempted++;
+
+                if (
+                    Number(testAnswers[index]) ===
+                    Number(question.answer)
+                ) {
+
+                    score++;
+                }
+            }
+        }
+    );
+
+
+    const result = {
+
+        total:
+            testQuestions.length,
+
+        attempted:
+            attempted,
+
+        correct:
+            score,
+
+        wrong:
+            attempted - score,
+
+        score:
+            score,
+
+        submittedAt:
+            new Date().toISOString()
+    };
+
+
+    if (
+        currentUser &&
+        window.FirebaseApp
+    ) {
+
+        try {
+
+            await window.FirebaseApp.saveTestResult(
+                currentUser.uid,
+                result
+            );
+
+        } catch (error) {
+
+            console.error(error);
+        }
+    }
+
+
+    showMessage(
+        "🎉 Mock Test Result",
+
+        "कुल प्रश्न: " +
+        result.total +
+
+        "\n\nप्रयास: " +
+        result.attempted +
+
+        "\n\nसही: " +
+        result.correct +
+
+        "\n\nगलत: " +
+        result.wrong +
+
+        "\n\nस्कोर: " +
+        result.score
+    );
+            }
+                async function loadCurrentAffairs() {
+
+    const container =
+        byId("currentList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card">
+            <p>Current Affairs लोड हो रहे हैं...</p>
+        </div>
+    `;
+
+    if (!window.FirebaseApp) {
+
+        showError(
+            container,
+            "Current Affairs service उपलब्ध नहीं है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const items =
+            await window.FirebaseApp.getCollection(
+                "currentAffairs"
+            );
+
+        renderCurrentAffairs(items);
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            container,
+            "Current Affairs लोड नहीं हो सके।"
+        );
+    }
+}
+
+
+function renderCurrentAffairs(items) {
+
+    const container =
+        byId("currentList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!items || items.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>📰 Current Affairs</h3>
+                <p>
+                    अभी कोई Current Affairs उपलब्ध नहीं है।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    items.forEach(function(item) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>
+                📰 ${escapeHtml(item.title || "")}
+            </h3>
+
+            <p>
+                ${escapeHtml(item.text || "")}
+            </p>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+async function loadNotices() {
+
+    const container =
+        byId("noticeList");
+
+    if (!container) {
+        return;
+    }
+
+    if (!window.FirebaseApp) {
+        return;
+    }
+
+    try {
+
+        const items =
+            await window.FirebaseApp.getCollection(
+                "notices"
+            );
+
+        renderNotices(items);
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+
+
+function renderNotices(items) {
+
+    const container =
+        byId("noticeList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!items || items.length === 0) {
+
+        container.innerHTML = `
+            <div class="card">
+                <h3>📢 Notices</h3>
+                <p>
+                    अभी कोई नया notice नहीं है।
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    items.forEach(function(item) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>
+                📢 ${escapeHtml(item.title || "")}
+            </h3>
+
+            <p>
+                ${escapeHtml(item.text || "")}
+            </p>
+        `;
+
+        container.appendChild(card);
+    });
+}
+function openLogin() {
+
+    showPage("login");
+}
+
+
+async function loginUser() {
+
+    const email =
+        byId("loginEmail");
+
+    const password =
+        byId("loginPassword");
+
+    if (!email || !password) {
+
+        showMessage(
+            "Login",
+            "Login form उपलब्ध नहीं है।"
+        );
+
+        return;
+    }
+
+    if (!window.FirebaseApp) {
+
+        showMessage(
+            "Firebase",
+            "Firebase connection उपलब्ध नहीं है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        const result =
+            await window.FirebaseApp.login(
+                email.value.trim(),
+                password.value
+            );
+
+        currentUser =
+            result.user;
+
+        currentUserProfile =
+            result.profile;
+
+        showPage("home");
+
+        showMessage(
+            "✅ Login सफल",
+            "आप सफलतापूर्वक login हो गए हैं।"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "❌ Login असफल",
+            getFirebaseError(error)
+        );
+    }
+}
+
+
+async function registerUser() {
+
+    const email =
+        byId("registerEmail");
+
+    const password =
+        byId("registerPassword");
+
+    if (!email || !password) {
+        return;
+    }
+
+    if (!window.FirebaseApp) {
+
+        showMessage(
+            "Firebase",
+            "Firebase connection उपलब्ध नहीं है।"
+        );
+
+        return;
+    }
+
+    try {
+
+        await window.FirebaseApp.register(
+            email.value.trim(),
+            password.value
+        );
+
+        showMessage(
+            "✅ Registration सफल",
+            "अब अपने account से login करें।"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Registration",
+            getFirebaseError(error)
+        );
+    }
+}
+
+
+async function logoutUser() {
+
+    if (
+        window.FirebaseApp &&
+        window.FirebaseApp.logout
+    ) {
+
+        await window.FirebaseApp.logout();
+    }
+
+    currentUser = null;
+    currentUserProfile = null;
+
+    showPage("home");
+}
+
+
+async function openAdmin() {
+
+    if (!currentUser) {
+
+        showMessage(
+            "Admin",
+            "पहले login करें।"
+        );
+
+        return;
+    }
+
+    if (
+        !currentUserProfile ||
+        currentUserProfile.role !== "admin"
+    ) {
+
+        showMessage(
+            "Access Denied",
+            "इस account को Admin permission नहीं है।"
+        );
+
+        return;
+    }
+
+    showPage("admin");
+
+    loadAdminContent();
+}
+async function loadAdminContent() {
+
+    if (
+        !currentUserProfile ||
+        currentUserProfile.role !== "admin"
+    ) {
+        return;
+    }
+
+    if (!window.FirebaseApp) {
+        return;
+    }
+
+    try {
+
+        const videos =
+            await window.FirebaseApp.getVideos();
+
+        const notes =
+            await window.FirebaseApp.getFiles(
+                "notes"
+            );
+
+        const papers =
+            await window.FirebaseApp.getFiles(
+                "papers"
+            );
+
+        renderAdminItems(
+            "adminVideoList",
+            videos,
+            "video"
+        );
+
+        renderAdminItems(
+            "adminNotesList",
+            notes,
+            "notes"
+        );
+
+        renderAdminItems(
+            "adminPaperList",
+            papers,
+            "papers"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+
+
+function renderAdminItems(
+    elementId,
+    items,
+    type
+) {
+
+    const container =
+        byId(elementId);
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    items.forEach(function(item) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>
+                ${escapeHtml(item.title || "")}
+            </h3>
+
+            <button
+                onclick="deleteContent(
+                    '${type}',
+                    '${escapeAttribute(item.id)}'
+                )">
+
+                🗑️ Delete
 
             </button>
         `;
 
         container.appendChild(card);
     });
-            }function openExam(examName) {
-
-    showMessage(
-        examName,
-        "इस परीक्षा के लिए Syllabus, Notes, PDF, Videos, Previous Papers और Mock Tests उपलब्ध कराए जाएंगे।"
-    );
 }
 
 
-function openYouTube(searchText) {
+async function deleteContent(
+    type,
+    id
+) {
 
-    const url =
-        "https://www.youtube.com/results?search_query=" +
-        encodeURIComponent(searchText);
+    if (
+        !currentUserProfile ||
+        currentUserProfile.role !== "admin"
+    ) {
 
-    window.location.href = url;
+        showMessage(
+            "Access Denied",
+            "Admin permission आवश्यक है।"
+        );
+
+        return;
+    }
+
+    if (
+        !window.FirebaseApp ||
+        !window.FirebaseApp.deleteContent
+    ) {
+        return;
+    }
+
+    const confirmed =
+        window.confirm(
+            "क्या आप इसे delete करना चाहते हैं?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        await window.FirebaseApp.deleteContent(
+            type,
+            id
+        );
+
+        await loadAdminContent();
+
+        showMessage(
+            "✅ सफल",
+            "Content delete हो गया।"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Delete Error",
+            getFirebaseError(error)
+        );
+    }
 }
 
 
 function callCenter() {
 
     window.location.href =
-        "tel:6375630291";
+        "tel:" + CENTER_PHONE;
 }
-
-
-function showMessage(title, message) {
+function showMessage(
+    title,
+    message
+) {
 
     const modal =
-        document.getElementById("modal");
+        byId("modal");
 
     const titleBox =
-        document.getElementById("mt");
+        byId("mt");
 
     const messageBox =
-        document.getElementById("mb");
+        byId("mb");
 
     if (!modal) {
+
+        window.alert(
+            title +
+            "\n\n" +
+            message
+        );
+
         return;
     }
 
@@ -224,7 +1298,7 @@ function showMessage(title, message) {
 function closeModal() {
 
     const modal =
-        document.getElementById("modal");
+        byId("modal");
 
     if (modal) {
         modal.style.display = "none";
@@ -232,174 +1306,100 @@ function closeModal() {
 }
 
 
-function startTest() {
+function showError(
+    container,
+    message
+) {
 
-    const quiz =
-        document.getElementById("quiz");
+    container.innerHTML = `
+        <div class="card">
+            <h3>⚠️ समस्या</h3>
+            <p>
+                ${escapeHtml(message)}
+            </p>
+        </div>
+    `;
+}
 
-    if (!quiz) {
-        return;
+
+function getFirebaseError(error) {
+
+    if (!error) {
+        return "अनजान समस्या हुई।";
     }
 
-    quiz.innerHTML = "";
+    const code =
+        error.code || "";
 
-    questions.forEach(function(item, index) {
+    const messages = {
 
-        const questionBox =
-            document.createElement("div");
+        "auth/invalid-email":
+            "Email सही नहीं है।",
 
-        questionBox.className = "card q";
+        "auth/user-not-found":
+            "यह account नहीं मिला।",
 
-        let optionsHTML = "";
+        "auth/wrong-password":
+            "Password गलत है।",
 
-        item.options.forEach(function(option, optionIndex) {
+        "auth/invalid-credential":
+            "Email या Password गलत है।",
 
-            optionsHTML += `
-                <label>
-                    <input
-                        type="radio"
-                        name="question${index}"
-                        value="${optionIndex}">
+        "auth/email-already-in-use":
+            "यह Email पहले से registered है।",
 
-                    ${option}
-                </label>
-            `;
-        });
+        "auth/weak-password":
+            "Password कम से कम मजबूत होना चाहिए।"
+    };
 
-        questionBox.innerHTML = `
-            <h3>
-                ${index + 1}. ${item.question}
-            </h3>
-
-            ${optionsHTML}
-        `;
-
-        quiz.appendChild(questionBox);
-    });
-
-    const submitButton =
-        document.createElement("button");
-
-    submitButton.className = "primary";
-
-    submitButton.textContent =
-        "✅ उत्तर जमा करें";
-
-    submitButton.onclick =
-        calculateResult;
-
-    quiz.appendChild(submitButton);
-        }
-function calculateResult() {
-
-    let score = 0;
-    let attempted = 0;
-
-    questions.forEach(function(item, index) {
-
-        const selected =
-            document.querySelector(
-                `input[name="question${index}"]:checked`
-            );
-
-        if (selected) {
-
-            attempted++;
-
-            if (
-                Number(selected.value) ===
-                item.answer
-            ) {
-                score++;
-            }
-        }
-    });
-
-    const wrong =
-        attempted - score;
-
-    showMessage(
-        "🎉 Mock Test Result",
-        "कुल प्रश्न: " +
-        questions.length +
-        "\n\nप्रयास किए: " +
-        attempted +
-        "\n\nसही उत्तर: " +
-        score +
-        "\n\nगलत उत्तर: " +
-        wrong +
-        "\n\nस्कोर: " +
-        score +
-        " / " +
-        questions.length
+    return (
+        messages[code] ||
+        error.message ||
+        "Firebase error हुआ।"
     );
 }
 
 
-function openTest() {
+function escapeHtml(value) {
 
-    showPage("tests");
-
-    startTest();
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-function openCurrentAffairs() {
+function escapeAttribute(value) {
 
-    openYouTube(
-        "Rajasthan Current Affairs Hindi"
-    );
+    return String(value ?? "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
 }
 
 
-function openClasses() {
-
-    openYouTube(
-        "Rajasthan CET Police Patwari BDO Classes Hindi"
-    );
-}
-
-
-function openVideos() {
-
-    openYouTube(
-        "Rajasthan CET latest lecture"
-    );
-}
-
-
-function openNotes() {
-
-    showMessage(
-        "📚 PDF / Notes",
-        "Notes और PDF सामग्री जल्द उपलब्ध कराई जाएगी।"
-    );
-}
-
-
-function openPapers() {
-
-    showMessage(
-        "📄 Previous Papers",
-        "Previous Year Papers जल्द उपलब्ध कराए जाएंगे।"
-    );
-}
-
-
-function openExamSection(examName) {
-
-    showMessage(
-        examName,
-        "इस परीक्षा की तैयारी सामग्री जल्द उपलब्ध कराई जाएगी।"
-    );
-}document.addEventListener(
+document.addEventListener(
     "DOMContentLoaded",
     function() {
 
         showPage("home");
 
-        loadExams();
+        if (
+            window.FirebaseApp &&
+            window.FirebaseApp.watchAuth
+        ) {
 
+            window.FirebaseApp.watchAuth(
+                function(user, profile) {
+
+                    currentUser = user;
+                    currentUserProfile = profile;
+
+                    loadNotices();
+                }
+            );
+        }
     }
 );
 
@@ -409,14 +1409,14 @@ document.addEventListener(
     function(event) {
 
         const modal =
-            document.getElementById("modal");
+            byId("modal");
 
         if (
             modal &&
             event.target === modal
         ) {
+
             closeModal();
         }
-
     }
 );
