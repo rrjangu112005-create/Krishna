@@ -1,7 +1,7 @@
 const exams = [
     {
         name: "राजस्थान CET",
-        description: "CET की तैयारी, विषयवार सामग्री और अभ्यास"
+        description: "CET की तैयारी, विषयवार सामग्री और Mock Test"
     },
     {
         name: "राजस्थान पुलिस",
@@ -9,11 +9,11 @@ const exams = [
     },
     {
         name: "पटवारी",
-        description: "Patwari परीक्षा की तैयारी"
+        description: "Patwari परीक्षा की संपूर्ण तैयारी"
     },
     {
-        name: "BDO / VDO",
-        description: "ग्राम विकास अधिकारी / BDO तैयारी"
+        name: "VDO / BDO",
+        description: "ग्राम विकास अधिकारी और BDO की तैयारी"
     },
     {
         name: "अन्य राजस्थान भर्ती",
@@ -51,19 +51,71 @@ const questions = [
             "Common Exam Training"
         ],
         answer: 0
+    },
+    {
+        question: "राजस्थान का राज्य वृक्ष कौन सा है?",
+        options: [
+            "खेजड़ी",
+            "नीम",
+            "पीपल",
+            "बरगद"
+        ],
+        answer: 0
+    },
+    {
+        question: "राजस्थान का राज्य पक्षी कौन सा है?",
+        options: [
+            "गोडावण",
+            "मोर",
+            "तोता",
+            "कबूतर"
+        ],
+        answer: 0
+    },
+    {
+        question: "राजस्थान की सबसे बड़ी खारे पानी की झील कौन सी है?",
+        options: [
+            "सांभर झील",
+            "पुष्कर झील",
+            "जयसमंद झील",
+            "आना सागर"
+        ],
+        answer: 0
+    },
+    {
+        question: "भारत का संविधान कब लागू हुआ?",
+        options: [
+            "26 जनवरी 1950",
+            "15 अगस्त 1947",
+            "26 नवंबर 1949",
+            "2 अक्टूबर 1950"
+        ],
+        answer: 0
+    },
+    {
+        question: "भारत की राजधानी क्या है?",
+        options: [
+            "नई दिल्ली",
+            "मुंबई",
+            "जयपुर",
+            "लखनऊ"
+        ],
+        answer: 0
     }
 ];
 
 
 function showPage(pageId) {
 
-    const pages = document.querySelectorAll(".page");
+    const pages =
+        document.querySelectorAll(".page");
 
     pages.forEach(function(page) {
         page.classList.remove("active");
     });
 
-    const selectedPage = document.getElementById(pageId);
+    const selectedPage =
+        document.getElementById(pageId);
 
     if (selectedPage) {
         selectedPage.classList.add("active");
@@ -93,7 +145,8 @@ function loadExams() {
 
     exams.forEach(function(exam) {
 
-        const card = document.createElement("div");
+        const card =
+            document.createElement("div");
 
         card.className = "card";
 
@@ -115,14 +168,11 @@ function loadExams() {
 
         container.appendChild(card);
     });
-}
-
-
-function openExam(examName) {
+            }function openExam(examName) {
 
     showMessage(
         examName,
-        "इस परीक्षा के लिए syllabus, notes, PDF, videos, previous papers और mock tests यहाँ उपलब्ध कराए जा सकते हैं।"
+        "इस परीक्षा के लिए Syllabus, Notes, PDF, Videos, Previous Papers और Mock Tests उपलब्ध कराए जाएंगे।"
     );
 }
 
@@ -159,9 +209,13 @@ function showMessage(title, message) {
         return;
     }
 
-    titleBox.textContent = title;
+    if (titleBox) {
+        titleBox.textContent = title;
+    }
 
-    messageBox.textContent = message;
+    if (messageBox) {
+        messageBox.textContent = message;
+    }
 
     modal.style.display = "flex";
 }
@@ -229,23 +283,17 @@ function startTest() {
     submitButton.className = "primary";
 
     submitButton.textContent =
-        "उत्तर जमा करें";
+        "✅ उत्तर जमा करें";
 
     submitButton.onclick =
         calculateResult;
 
     quiz.appendChild(submitButton);
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-
+        }
 function calculateResult() {
 
     let score = 0;
+    let attempted = 0;
 
     questions.forEach(function(item, index) {
 
@@ -254,17 +302,33 @@ function calculateResult() {
                 `input[name="question${index}"]:checked`
             );
 
-        if (
-            selected &&
-            Number(selected.value) === item.answer
-        ) {
-            score++;
+        if (selected) {
+
+            attempted++;
+
+            if (
+                Number(selected.value) ===
+                item.answer
+            ) {
+                score++;
+            }
         }
     });
 
+    const wrong =
+        attempted - score;
+
     showMessage(
-        "Mock Test Result",
-        "आपका स्कोर: " +
+        "🎉 Mock Test Result",
+        "कुल प्रश्न: " +
+        questions.length +
+        "\n\nप्रयास किए: " +
+        attempted +
+        "\n\nसही उत्तर: " +
+        score +
+        "\n\nगलत उत्तर: " +
+        wrong +
+        "\n\nस्कोर: " +
         score +
         " / " +
         questions.length
@@ -272,11 +336,87 @@ function calculateResult() {
 }
 
 
-document.addEventListener(
+function openTest() {
+
+    showPage("tests");
+
+    startTest();
+}
+
+
+function openCurrentAffairs() {
+
+    openYouTube(
+        "Rajasthan Current Affairs Hindi"
+    );
+}
+
+
+function openClasses() {
+
+    openYouTube(
+        "Rajasthan CET Police Patwari BDO Classes Hindi"
+    );
+}
+
+
+function openVideos() {
+
+    openYouTube(
+        "Rajasthan CET latest lecture"
+    );
+}
+
+
+function openNotes() {
+
+    showMessage(
+        "📚 PDF / Notes",
+        "Notes और PDF सामग्री जल्द उपलब्ध कराई जाएगी।"
+    );
+}
+
+
+function openPapers() {
+
+    showMessage(
+        "📄 Previous Papers",
+        "Previous Year Papers जल्द उपलब्ध कराए जाएंगे।"
+    );
+}
+
+
+function openExamSection(examName) {
+
+    showMessage(
+        examName,
+        "इस परीक्षा की तैयारी सामग्री जल्द उपलब्ध कराई जाएगी।"
+    );
+}document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+        showPage("home");
+
         loadExams();
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById("modal");
+
+        if (
+            modal &&
+            event.target === modal
+        ) {
+            closeModal();
+        }
 
     }
 );
