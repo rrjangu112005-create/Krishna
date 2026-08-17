@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="hi">
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>कृष्ण कोचिंग सेंटर</title>
 
@@ -14,324 +12,108 @@
 <body>
 
 <header>
-    <b>कृष्ण कोचिंग सेंटर</b>
-    <small>गुड़ा भगवानदास • 63756-30291</small>
+    <div>
+        <b>कृष्ण कोचिंग सेंटर</b>
+        <small>गुड़ा भगवानदास • राजस्थान प्रतियोगी परीक्षा तैयारी</small>
+    </div>
 </header>
 
 <main>
 
+<!-- HOME -->
 <section id="home" class="page active">
 
     <div class="hero">
-        <h1>राजस्थान प्रतियोगी परीक्षाओं की तैयारी</h1>
+        <h1>📚 कृष्ण कोचिंग सेंटर</h1>
         <p>
-            CET • पुलिस • पटवारी • BDO • अन्य राजस्थान भर्तियाँ
+            राजस्थान की प्रतियोगी परीक्षाओं की तैयारी
+            अब एक ही ऐप में।
+        </p>
+
+        <div class="hero-info">
+            CET • पुलिस • पटवारी • VDO/BDO • अन्य भर्तियाँ
+        </div>
+    </div>
+
+    <div class="welcome card">
+        <h2>🙏 स्वागत है</h2>
+        <p>
+            यहाँ आपको परीक्षा तैयारी, ऑनलाइन क्लास,
+            PDF Notes, Previous Papers, Question Bank,
+            Current Affairs और Mock Test मिलेंगे।
         </p>
     </div>
+
+    <h2>📖 मुख्य सेवाएँ</h2>
 
     <div class="grid">
 
         <button onclick="showPage('exams')">
-            🎯 परीक्षा
+            🎯
+            <span>परीक्षा तैयारी</span>
         </button>
 
         <button onclick="showPage('classes')">
-            🎓 क्लासेज
+            🎓
+            <span>ऑनलाइन क्लास</span>
         </button>
 
         <button onclick="showPage('videos')">
-            ▶️ वीडियो
+            ▶️
+            <span>वीडियो लेक्चर</span>
         </button>
 
         <button onclick="showPage('pdfs')">
-            📚 PDF / Notes
+            📚
+            <span>PDF / Notes</span>
         </button>
 
         <button onclick="showPage('papers')">
-            📄 Previous Papers
+            📄
+            <span>Previous Papers</span>
+        </button>
+
+        <button onclick="showPage('questionbank')">
+            ❓
+            <span>Question Bank</span>
         </button>
 
         <button onclick="showPage('tests')">
-            📝 Mock Test
+            📝
+            <span>Mock Test</span>
         </button>
 
         <button onclick="showPage('current')">
-            📰 Current Affairs
-        </button>
-
-        <button onclick="showPage('contact')">
-            📞 संपर्क
+            📰
+            <span>Current Affairs</span>
         </button>
 
     </div>
 
-    <div class="card">
-        <b>कृष्ण कोचिंग सेंटर में आपका स्वागत है</b>
+    <div class="card contact-card">
+        <h3>📞 कृष्ण कोचिंग सेंटर</h3>
+        <p>गुड़ा भगवानदास</p>
+        <p><b>मोबाइल: 63756-30291</b></p>
 
-        <p>
-            राजस्थान की प्रतियोगी परीक्षाओं की तैयारी
-            एक ही ऐप में।
-        </p>
+        <button class="primary" onclick="callCenter()">
+            📞 अभी कॉल करें
+        </button>
     </div>
 
 </section>
 
 
+<!-- EXAMS -->
 <section id="exams" class="page">
+
+    <button class="back" onclick="showPage('home')">
+        ← वापस
+    </button>
 
     <h2>🎯 परीक्षा तैयारी</h2>
 
     <div class="list">
 
-        <button class="item">
-            राजस्थान CET
-        </button>
-
-        <button class="item">
-            राजस्थान पुलिस
-        </button>
-
-        <button class="item">
-            पटवारी
-        </button>
-
-        <button class="item">
-            BDO / VDO
-        </button>
-
-        <button class="item">
-            अन्य राजस्थान भर्ती
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="classes" class="page">
-
-    <h2>🎓 ऑनलाइन क्लासेज</h2>
-
-    <div class="list">
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan CET class Hindi')">
-            CET Classes
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan Police class Hindi')">
-            Police Classes
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan Patwari class Hindi')">
-            Patwari Classes
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan BDO VDO class Hindi')">
-            BDO / VDO Classes
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="videos" class="page">
-
-    <h2>▶️ वीडियो लेक्चर</h2>
-
-    <div class="list">
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan CET latest lecture')">
-            CET Video
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan Police latest lecture')">
-            Police Video
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan Patwari latest lecture')">
-            Patwari Video
-        </button>
-
-        <button class="item"
-                onclick="openYouTube('Rajasthan BDO VDO latest lecture')">
-            BDO / VDO Video
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="pdfs" class="page">
-
-    <h2>📚 PDF / Notes</h2>
-
-    <div class="list">
-
-        <button class="item">
-            राजस्थान GK Notes
-        </button>
-
-        <button class="item">
-            Hindi Notes
-        </button>
-
-        <button class="item">
-            Maths Notes
-        </button>
-
-        <button class="item">
-            Reasoning Notes
-        </button>
-
-        <button class="item">
-            Current Affairs Notes
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="papers" class="page">
-
-    <h2>📄 Previous Papers</h2>
-
-    <div class="list">
-
-        <button class="item">
-            CET Previous Papers
-        </button>
-
-        <button class="item">
-            Police Previous Papers
-        </button>
-
-        <button class="item">
-            Patwari Previous Papers
-        </button>
-
-        <button class="item">
-            BDO / VDO Previous Papers
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="tests" class="page">
-
-    <h2>📝 Mock Test</h2>
-
-    <div class="card">
-
-        <p>
-            यहाँ से विषयवार Mock Test शुरू होगा।
-        </p>
-
-        <button class="primary"
-                onclick="startTest()">
-
-            टेस्ट शुरू करें
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="current" class="page">
-
-    <h2>📰 Current Affairs</h2>
-
-    <div class="card">
-
-        <p>
-            राजस्थान और भारत के Current Affairs
-            यहाँ उपलब्ध होंगे।
-        </p>
-
-        <button class="primary"
-                onclick="openYouTube('Rajasthan Current Affairs Hindi')">
-
-            Current Affairs देखें
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<section id="contact" class="page">
-
-    <h2>📞 संपर्क</h2>
-
-    <div class="card">
-
-        <h3>कृष्ण कोचिंग सेंटर</h3>
-
-        <p>गुड़ा भगवानदास</p>
-
-        <p>
-            <b>मोबाइल: 63756-30291</b>
-        </p>
-
-        <button class="primary"
-                onclick="callCenter()">
-
-            📞 अभी कॉल करें
-
-        </button>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<nav>
-
-    <button onclick="showPage('home')">
-        🏠
-        <span>होम</span>
-    </button>
-
-    <button onclick="showPage('exams')">
-        🎯
-        <span>परीक्षा</span>
-    </button>
-
-    <button onclick="showPage('classes')">
-        🎓
-        <span>क्लास</span>
-    </button>
-
-    <button onclick="showPage('pdfs')">
-        📚
-        <span>Notes</span>
-    </button>
-
-    <button onclick="showPage('tests')">
-        📝
-        <span>Test</span>
-    </button>
-
-</nav>
-
-
-<script src="app.js"></script>
-
-</body>
-          </html>
+        <button class="item" onclick="openExam('राजस्थान CET')">
+            <b>राजस्थान CET</b>
+           
